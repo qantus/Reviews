@@ -1,0 +1,18 @@
+{% extends "reviews/base.html" %}
+
+{% block content %}
+    <section class="reviews">
+        <ul class="no-bullets reviews-list">
+            {% for review in reviews.reviews %}
+                <li class="review">
+                    <section class="review-name">
+                        {{ review.name }}
+                    </section>
+                    <section class="review-description">
+                        {{ review.content }}
+                    </section>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}

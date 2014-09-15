@@ -3,7 +3,7 @@
 namespace Modules\Reviews\Admin;
 
 use Modules\Admin\Components\ModelAdmin;
-use Modules\Reviews\Forms\ReviewForm;
+use Modules\Reviews\Forms\ReviewAdminForm;
 use Modules\Reviews\Models\Review;
 
 class ReviewsAdmin extends ModelAdmin
@@ -15,7 +15,7 @@ class ReviewsAdmin extends ModelAdmin
 
     public function getCreateForm()
     {
-        return ReviewForm::className();
+        return ReviewAdminForm::className();
     }
 
     public function getModel()

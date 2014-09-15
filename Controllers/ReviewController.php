@@ -14,36 +14,32 @@
 
 namespace Modules\Reviews\Controllers;
 
-
 use Mindy\Base\Mindy;
-use Mindy\Helper\Json;
+use Modules\Reviews\Helpers\ReviewsHelper;
 use Modules\Core\Controllers\CoreController;
-use Modules\Reviews\Forms\ReviewForm;
+use Modules\Reviews\Forms\ReviewUserForm;
 
 class ReviewController extends CoreController
 {
     public function actionIndex()
     {
         $request = Mindy::app()->request;
-        if($request->getIsPostRequest()) {
-            $form = new ReviewForm();
+        $form = new ReviewUserForm();
 
-            if($form->setAttributes($_POST)->isValid() && $form->save()) {
-                $form->send();
-                $success = true;
-            } else {
-                $success = false;
+        $this->addBreadcrumb('Отзывы');
+        if($request->isPost && $form->setAttributes($_POST)->isValid() && $form->send()) {
+            if ($request->isAjax) {
+                echo $this->render('reviews/success.html');
+                Mindy::app()->end();
+            }else{
+                Mindy::app()->flash->success("Отзыв успешно отправлен");
+                $this->refresh();
             }
-
-            $this->redirectNext();
-
-            echo $this->json([
-                'success' => $success
-            ]);
-        } else {
-            $this->redirectNext();
-
-            $this->error(400);
         }
+
+        $reviews = ReviewsHelper::getReviews(true, $form);
+        echo $this->render('reviews/index.html', [
+            'reviews' => $reviews
+        ]);
     }
 }

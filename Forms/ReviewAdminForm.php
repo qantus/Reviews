@@ -14,28 +14,13 @@
 
 namespace Modules\Reviews\Forms;
 
-
-use Mindy\Base\Mindy;
 use Mindy\Form\ModelForm;
 use Modules\Reviews\Models\Review;
 
-
-class ReviewForm extends ModelForm
+class ReviewAdminForm extends ModelForm
 {
-    public $exclude = [
-        'is_published',
-        'published_at',
-    ];
-
     public function getModel()
     {
         return Review::className();
-    }
-
-    public function send()
-    {
-        return Mindy::app()->mail->fromCode('reviews.send', $this->cleanedData['email'], [
-            'data' => $this->cleanedData
-        ]);
     }
 }
