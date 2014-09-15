@@ -24,6 +24,7 @@ use Mindy\Orm\Fields\TextField;
 use Mindy\Orm\Model;
 use Modules\Reviews\ReviewsModule;
 use Modules\User\Models\User;
+use Mindy\Base\Mindy;
 
 /**
  * Class Review
@@ -87,5 +88,15 @@ class Review extends Model
     {
         $className = get_called_class();
         return new ReviewManager($instance ? $instance : new $className);
+    }
+
+    public static function getModuleName()
+    {
+        return 'reviews';
+    }
+
+    public function getModule()
+    {
+        return Mindy::app()->getModule('reviews');
     }
 }
