@@ -15,12 +15,12 @@
 namespace Modules\Reviews\Forms;
 
 use Mindy\Form\ModelForm;
-use Modules\Reviews\Models\Review;
+use Mindy\Base\Mindy;
 
 class ReviewAdminForm extends ModelForm
 {
     public function getModel()
     {
-        return Review::className();
+        return Mindy::app()->getModule('reviews')->modelClass;
     }
 }

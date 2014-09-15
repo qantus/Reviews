@@ -16,7 +16,6 @@ namespace Modules\Reviews\Forms;
 
 use Mindy\Base\Mindy;
 use Mindy\Form\ModelForm;
-use Modules\Reviews\Models\Review;
 
 class ReviewUserForm extends ModelForm
 {
@@ -28,7 +27,7 @@ class ReviewUserForm extends ModelForm
 
     public function getModel()
     {
-        return Review::className();
+        return Mindy::app()->getModule('reviews')->modelClass;
     }
 
     public function send()
