@@ -6,6 +6,7 @@ use Mindy\Base\Mindy;
 use Modules\Admin\Components\ModelAdmin;
 use Modules\Reviews\Forms\ReviewAdminForm;
 use Modules\Reviews\Models\Review;
+use Modules\Reviews\ReviewsModule;
 
 class ReviewsAdmin extends ModelAdmin
 {
@@ -28,6 +29,16 @@ class ReviewsAdmin extends ModelAdmin
     public function getModule()
     {
         return Mindy::app()->getModule('reviews');
+    }
+
+    public function getVerboseName()
+    {
+        return ReviewsModule::t('review');
+    }
+
+    public function getVerboseNamePlural()
+    {
+        return ReviewsModule::t('reviews');
     }
 }
 

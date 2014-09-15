@@ -10,4 +10,6 @@ return array (
   'Updated time' => 'Время изменения',
   'Published time' => 'Время публикации',
   'Reviews' => 'Отзывы',
+  'reviews' => 'отзывы',
+  'review' => 'отзыв',
 );
