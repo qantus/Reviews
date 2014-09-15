@@ -17,15 +17,20 @@ namespace Modules\Reviews\Controllers;
 use Mindy\Base\Mindy;
 use Modules\Reviews\Helpers\ReviewsHelper;
 use Modules\Core\Controllers\CoreController;
-use Modules\Reviews\Forms\ReviewUserForm;
+
 
 class ReviewController extends CoreController
 {
+    public function getForm()
+    {
+        return $this->getModule()->formClass;
+    }
+
     public function actionIndex()
     {
+        $formClass = $this->getForm();
+        $form = new $formClass;
         $request = Mindy::app()->request;
-        $form = new ReviewUserForm();
-
         $this->addBreadcrumb('Отзывы');
         if($request->isPost && $form->setAttributes($_POST)->isValid() && $form->send()) {
             if ($request->isAjax) {
@@ -34,7 +39,6 @@ class ReviewController extends CoreController
             }else{
                 Mindy::app()->flash->success("Отзыв успешно отправлен");
                 $this->refresh();
-            }
         }
 
         $reviews = ReviewsHelper::getReviews(true, $form);
