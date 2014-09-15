@@ -6,6 +6,8 @@ use Mindy\Base\Module;
 
 class ReviewsModule extends Module
 {
+    public $formClass = 'Modules\Reviews\Forms\ReviewForm';
+
     public function getVersion()
     {
         return '1.0';

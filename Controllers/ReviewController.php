@@ -18,15 +18,20 @@ namespace Modules\Reviews\Controllers;
 use Mindy\Base\Mindy;
 use Mindy\Helper\Json;
 use Modules\Core\Controllers\CoreController;
-use Modules\Reviews\Forms\ReviewForm;
 
 class ReviewController extends CoreController
 {
+    public function getForm()
+    {
+        return $this->getModule()->formClass;
+    }
+
     public function actionIndex()
     {
+        $formClass = $this->getForm();
         $request = Mindy::app()->request;
         if($request->getIsPostRequest()) {
-            $form = new ReviewForm();
+            $form = new $formClass;
 
             if($form->setAttributes($_POST)->isValid() && $form->save()) {
                 $form->send();
