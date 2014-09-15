@@ -8,7 +8,7 @@ class ReviewsHelper
 {
     public static function getReviews($pager = true, $form = null)
     {
-        $module = Mindy::app()->getModule('reviews');
+        $module = Mindy::app()->getModule('Reviews');
 
         $formClass = $module->formClass;
         $modelClass = $module->modelClass;

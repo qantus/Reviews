@@ -89,14 +89,4 @@ class Review extends Model
         $className = get_called_class();
         return new ReviewManager($instance ? $instance : new $className);
     }
-
-    public static function getModuleName()
-    {
-        return 'reviews';
-    }
-
-    public function getModule()
-    {
-        return Mindy::app()->getModule('reviews');
-    }
 }
