@@ -18,7 +18,6 @@ use Mindy\Base\Mindy;
 use Modules\Reviews\Helpers\ReviewsHelper;
 use Modules\Core\Controllers\CoreController;
 
-
 class ReviewController extends CoreController
 {
     public function getForm()
@@ -39,6 +38,7 @@ class ReviewController extends CoreController
             }else{
                 Mindy::app()->flash->success("Отзыв успешно отправлен");
                 $this->refresh();
+            }
         }
 
         $reviews = ReviewsHelper::getReviews(true, $form);

@@ -2,6 +2,7 @@
 
 namespace Modules\Reviews\Admin;
 
+use Mindy\Base\Mindy;
 use Modules\Admin\Components\ModelAdmin;
 use Modules\Reviews\Forms\ReviewAdminForm;
 use Modules\Reviews\Models\Review;
@@ -15,12 +16,18 @@ class ReviewsAdmin extends ModelAdmin
 
     public function getCreateForm()
     {
-        return ReviewAdminForm::className();
+        return $this->getModule()->formAdminClass;
     }
 
     public function getModel()
     {
-        return new Review;
+        $modelClass = $this->getModule()->modelClass;
+        return new $modelClass();
+    }
+
+    public function getModule()
+    {
+        return Mindy::app()->getModule('reviews');
     }
 }
 
