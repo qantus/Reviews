@@ -31,7 +31,7 @@ class ReviewController extends CoreController
         $form = new $formClass;
         $request = Mindy::app()->request;
         $this->addBreadcrumb('Отзывы');
-        if($request->isPost && $form->setAttributes($_POST)->isValid() && $form->send()) {
+        if($request->isPost && $form->setAttributes($_POST)->isValid() && $form->save() && $form->send()) {
             if ($request->isAjax) {
                 echo $this->render('reviews/success.html');
                 Mindy::app()->end();
