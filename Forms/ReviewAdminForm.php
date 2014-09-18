@@ -19,6 +19,8 @@ use Mindy\Base\Mindy;
 
 class ReviewAdminForm extends ModelForm
 {
+    public $exclude = ['created_at', 'updated_at'];
+
     public function getModel()
     {
         return Mindy::app()->getModule('reviews')->modelClass;
