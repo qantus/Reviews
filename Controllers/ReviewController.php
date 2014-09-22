@@ -15,6 +15,7 @@
 namespace Modules\Reviews\Controllers;
 
 use Mindy\Base\Mindy;
+use Mindy\Helper\Json;
 use Modules\Reviews\Helpers\ReviewsHelper;
 use Modules\Core\Controllers\CoreController;
 
@@ -31,6 +32,8 @@ class ReviewController extends CoreController
         $form = new $formClass;
         $request = Mindy::app()->request;
         $this->addBreadcrumb('Отзывы');
+
+        $this->ajaxValidation($form);
         if($request->isPost && $form->setAttributes($_POST)->isValid() && $form->save() && $form->send()) {
             if ($request->isAjax) {
                 echo $this->render('reviews/success.html');
@@ -45,5 +48,14 @@ class ReviewController extends CoreController
         echo $this->render('reviews/index.html', [
             'reviews' => $reviews
         ]);
+    }
+
+    public function ajaxValidation($form)
+    {
+        if($this->r->isPost && isset($_POST['ajax_validation'])) {
+            $form->setAttributes($_POST)->isValid();
+            echo Json::encode($form->getErrors());
+            Mindy::app()->end();
+        }
     }
 }

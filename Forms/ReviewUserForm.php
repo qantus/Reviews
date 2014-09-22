@@ -15,7 +15,10 @@
 namespace Modules\Reviews\Forms;
 
 use Mindy\Base\Mindy;
+use Mindy\Form\Fields\CharField;
+use Mindy\Form\Fields\EmailField;
 use Mindy\Form\ModelForm;
+use Modules\Reviews\ReviewsModule;
 
 class ReviewUserForm extends ModelForm
 {
@@ -35,5 +38,21 @@ class ReviewUserForm extends ModelForm
         return Mindy::app()->mail->fromCode('reviews.send', $this->cleanedData['email'], [
             'data' => $this->cleanedData
         ]);
+    }
+
+    public function getFields()
+    {
+        return [
+            'email' => [
+                'class' => EmailField::className(),
+                'label' => ReviewsModule::t('Email'),
+                'required' => true,
+            ],
+            'name' => [
+                'class' => CharField::className(),
+                'label' => ReviewsModule::t('Name'),
+                'required' => true,
+            ]
+        ];
     }
 }
