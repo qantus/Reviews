@@ -34,4 +34,15 @@ class ReviewsHelper
             ];
         }
     }
+
+    public static function getRandomReviews($limit = 3, $exclude = null)
+    {
+        $module = Mindy::app()->getModule('Reviews');
+        $modelClass = $module->modelClass;
+        $qs = $modelClass::objects()->published()->limit($limit)->order(['?']);
+        if ($exclude) {
+            $qs = $qs->exclude(['id' => $exclude]);
+        }
+        return $qs->all();
+    }
 } 

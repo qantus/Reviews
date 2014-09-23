@@ -50,6 +50,18 @@ class ReviewController extends CoreController
         ]);
     }
 
+    public function actionView($pk = null)
+    {
+        $modelClass = $this->getModule()->modelClass;
+        $model = $modelClass::objects()->filter(['pk' => $pk])->get();
+        if (!$model) {
+            $this->error(404);
+        }
+        echo $this->render('reviews/view.html', [
+            'model' => $model
+        ]);
+    }
+
     public function ajaxValidation($form)
     {
         if($this->r->isPost && isset($_POST['ajax_validation'])) {
