@@ -58,7 +58,7 @@ class ReviewController extends CoreController
         if (!$model) {
             $this->error(404);
         }
-        
+
         $this->addBreadcrumb(ReviewsModule::t('Reviews'), Mindy::app()->urlManager->reverse('reviews.send'));
         $this->addBreadcrumb($model->name);
 

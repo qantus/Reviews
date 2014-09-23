@@ -89,4 +89,9 @@ class Review extends Model
         $className = get_called_class();
         return new ReviewManager($instance ? $instance : new $className);
     }
+
+    public function getAbsoluteUrl()
+    {
+        return Mindy::app()->urlManager->reverse('reviews.view', ['pk' => $this->id]);
+    }
 }
