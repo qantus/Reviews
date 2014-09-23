@@ -18,6 +18,7 @@ use Mindy\Base\Mindy;
 use Mindy\Form\Fields\CharField;
 use Mindy\Form\Fields\EmailField;
 use Mindy\Form\ModelForm;
+use Modules\Core\Components\ParamsHelper;
 use Modules\Reviews\ReviewsModule;
 
 class ReviewUserForm extends ModelForm
@@ -35,7 +36,7 @@ class ReviewUserForm extends ModelForm
 
     public function send()
     {
-        return Mindy::app()->mail->fromCode('reviews.send', $this->cleanedData['email'], [
+        return Mindy::app()->mail->fromCode('reviews.send', ParamsHelper::get('core.core.email_owner'), [
             'data' => $this->cleanedData
         ]);
     }
