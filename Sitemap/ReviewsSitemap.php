@@ -39,13 +39,9 @@ class ReviewsSitemap extends Sitemap
         return '';
     }
 
-    public function generateHtml($data)
+    public function getLevel($data)
     {
-        $level = 1;
-        if (isset($data['root'])) {
-            $level = 0;
-        }
-        return parent::generateHtml($data, $level);
+        return isset($data['root']) ? 0 : 1;
     }
 
     public function getExtraItems()
