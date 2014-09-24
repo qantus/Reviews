@@ -14,6 +14,7 @@
 namespace Modules\Reviews\Sitemap;
 
 use Modules\Reviews\Models\Review;
+use Modules\Reviews\ReviewsModule;
 use Modules\Sitemap\Components\Sitemap;
 
 class ReviewsSitemap extends Sitemap
@@ -38,10 +39,21 @@ class ReviewsSitemap extends Sitemap
         return '';
     }
 
+    public function generateHtml($data)
+    {
+        $level = 1;
+        if (isset($data['root'])) {
+            $level = 0;
+        }
+        return parent::generateHtml($data, $level);
+    }
+
     public function getExtraItems()
     {
         return [
             [
+                'root' => true,
+                'name' => ReviewsModule::t('Reviews'),
                 'reversed' => $this->reverse('reviews.send')
             ]
         ];
