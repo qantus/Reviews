@@ -41,7 +41,7 @@ class ReviewController extends CoreController
                 Mindy::app()->end();
             }else{
                 Mindy::app()->flash->success("Отзыв успешно отправлен");
-                $this->refresh();
+                $this->r->http->refresh();
             }
         }
 
