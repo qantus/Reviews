@@ -2,7 +2,7 @@
 
 return [
     '/' => [
-        'name' => 'send',
+        'name' => 'index',
         'callback' => '\Modules\Reviews\Controllers\ReviewController:index'
     ],
     '/{pk}' => [

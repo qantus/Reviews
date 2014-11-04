@@ -6,6 +6,7 @@ use Mindy\Base\Module;
 
 class ReviewsModule extends Module
 {
+    public $enableForm = true;
     public $modelClass = 'Modules\Reviews\Models\Review';
     public $formClass = 'Modules\Reviews\Forms\ReviewUserForm';
     public $formAdminClass = 'Modules\Reviews\Forms\ReviewAdminForm';

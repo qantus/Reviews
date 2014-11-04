@@ -47,7 +47,8 @@ class ReviewController extends CoreController
 
         $reviews = ReviewsHelper::getReviews(true, $form);
         echo $this->render('reviews/index.html', [
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            'enableForm' => $this->getModule()->enableForm
         ]);
     }
 
