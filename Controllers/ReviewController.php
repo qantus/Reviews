@@ -35,7 +35,7 @@ class ReviewController extends CoreController
         $this->addBreadcrumb(ReviewsModule::t('Reviews'));
 
         $this->ajaxValidation($form);
-        if($request->isPost && $form->setAttributes($_POST)->isValid() && $form->save() && $form->send()) {
+        if($request->isPost && $form->populate($_POST)->isValid() && $form->save() && $form->send()) {
             if ($request->isAjax) {
                 echo $this->render('reviews/success.html');
                 Mindy::app()->end();
@@ -70,7 +70,7 @@ class ReviewController extends CoreController
     public function ajaxValidation($form)
     {
         if($this->r->isPost && isset($_POST['ajax_validation'])) {
-            $form->setAttributes($_POST)->isValid();
+            $form->populate($_POST)->isValid();
             echo Json::encode($form->getErrors());
             Mindy::app()->end();
         }
