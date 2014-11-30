@@ -13,14 +13,14 @@ class ReviewsHelper
         $formClass = $module->formClass;
         $modelClass = $module->modelClass;
 
-        if (!$form){
+        if (!$form) {
             $form = new $formClass();
         }
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             $form->setAttributes($_POST);
         }
         $qs = $modelClass::objects()->published()->order(['-published_at']);
-        if($pager) {
+        if ($pager) {
             $pager = new \Mindy\Pagination\Pagination($qs);
             return [
                 'reviews' => $pager->paginate(),

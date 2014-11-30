@@ -14,7 +14,6 @@
 
 namespace Modules\Reviews\Models;
 
-
 use Mindy\Orm\Fields\BooleanField;
 use Mindy\Orm\Fields\CharField;
 use Mindy\Orm\Fields\DateTimeField;
@@ -22,6 +21,7 @@ use Mindy\Orm\Fields\EmailField;
 use Mindy\Orm\Fields\ForeignField;
 use Mindy\Orm\Fields\TextField;
 use Mindy\Orm\Model;
+use Mindy\Query\ConnectionManager;
 use Modules\Reviews\ReviewsModule;
 use Modules\User\Models\User;
 use Mindy\Base\Mindy;
@@ -64,11 +64,13 @@ class Review extends Model
             'created_at' => [
                 'class' => DateTimeField::className(),
                 'autoNowAdd' => true,
+                'editable' => false,
                 'verboseName' => ReviewsModule::t('Created time')
             ],
             'updated_at' => [
                 'class' => DateTimeField::className(),
                 'autoNow' => true,
+                'editable' => false,
                 'verboseName' => ReviewsModule::t('Updated time')
             ],
             'published_at' => [
@@ -93,5 +95,17 @@ class Review extends Model
     public function getAbsoluteUrl()
     {
         return Mindy::app()->urlManager->reverse('reviews.view', ['pk' => $this->id]);
+    }
+
+    /**
+     * @param $owner Review
+     * @param $isNew
+     */
+    public function beforeSave($owner, $isNew)
+    {
+        if ($this->is_published && empty($owner->published_at)) {
+            $queryBuilder = ConnectionManager::getDb()->getQueryBuilder();
+            $owner->published_at = $queryBuilder->convertToDateTime();
+        }
     }
 }

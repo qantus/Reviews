@@ -31,14 +31,8 @@ class ReviewUserForm extends ModelForm
 
     public function getModel()
     {
-        return Mindy::app()->getModule('reviews')->modelClass;
-    }
-
-    public function send()
-    {
-        return Mindy::app()->mail->fromCode('reviews.send', ParamsHelper::get('core.core.email_owner'), [
-            'data' => $this->cleanedData
-        ]);
+        $cls = Mindy::app()->getModule('Reviews')->modelClass;
+        return new $cls;
     }
 
     public function getFields()
@@ -55,5 +49,16 @@ class ReviewUserForm extends ModelForm
                 'required' => true,
             ]
         ];
+    }
+
+    public function save()
+    {
+        $status = parent::save();
+        if ($status) {
+            Mindy::app()->mail->fromCode('reviews.new_review', Mindy::app()->managers, [
+                'model' => $this->getInstance()
+            ]);
+        }
+        return $status;
     }
 }

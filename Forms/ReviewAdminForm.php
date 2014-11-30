@@ -23,6 +23,7 @@ class ReviewAdminForm extends ModelForm
 
     public function getModel()
     {
-        return Mindy::app()->getModule('reviews')->modelClass;
+        $cls = Mindy::app()->getModule('Reviews')->modelClass;
+        return new $cls;
     }
 }

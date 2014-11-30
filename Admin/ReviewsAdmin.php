@@ -28,17 +28,7 @@ class ReviewsAdmin extends ModelAdmin
 
     public function getModule()
     {
-        return Mindy::app()->getModule('reviews');
-    }
-
-    public function getVerboseName()
-    {
-        return ReviewsModule::t('review');
-    }
-
-    public function getVerboseNamePlural()
-    {
-        return ReviewsModule::t('reviews');
+        return Mindy::app()->getModule('Reviews');
     }
 }
 

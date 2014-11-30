@@ -1,9 +1,9 @@
 <?php
 /**
- * 
+ *
  *
  * All rights reserved.
- * 
+ *
  * @author Falaleev Maxim
  * @email max@studio107.ru
  * @version 1.0
@@ -16,43 +16,45 @@ namespace Modules\Reviews\Controllers;
 
 use Mindy\Base\Mindy;
 use Mindy\Helper\Json;
-use Modules\Reviews\Helpers\ReviewsHelper;
+use Mindy\Pagination\Pagination;
 use Modules\Core\Controllers\CoreController;
 use Modules\Reviews\ReviewsModule;
 
 class ReviewController extends CoreController
 {
-    public function getForm()
-    {
-        return $this->getModule()->formClass;
-    }
-
     public function actionIndex()
     {
-        $formClass = $this->getForm();
+        $module = Mindy::app()->getModule('Reviews');
+
+        $formClass = $module->formClass;
         $form = new $formClass;
-        $request = Mindy::app()->request;
+        $request = $this->getRequest();
         $this->addBreadcrumb(ReviewsModule::t('Reviews'));
 
         $this->ajaxValidation($form);
-        if($request->isPost && $form->populate($_POST)->isValid() && $form->save() && $form->send()) {
+
+        if ($request->isPost && $form->populate($_POST)->isValid() && $form->save()) {
             if ($request->isAjax) {
                 echo $this->render('reviews/success.html');
                 Mindy::app()->end();
-            }else{
-                Mindy::app()->flash->success("Отзыв успешно отправлен");
-                $this->r->http->refresh();
+            } else {
+                $request->flash->success(ReviewsModule::t('Review sucessfully sended'));
+                $request->refresh();
             }
         }
 
-        $reviews = ReviewsHelper::getReviews(true, $form);
+        $modelClass = $module->modelClass;
+        $model = new $modelClass;
+        $pager = new Pagination($model->objects()->published());
         echo $this->render('reviews/index.html', [
-            'reviews' => $reviews,
+            'pager' => $pager,
+            'reviews' => $pager->paginate(),
+            'form' => $form,
             'enableForm' => $this->getModule()->enableForm
         ]);
     }
 
-    public function actionView($pk = null)
+    public function actionView($pk)
     {
         $modelClass = $this->getModule()->modelClass;
         $model = $modelClass::objects()->filter(['pk' => $pk])->get();
@@ -70,7 +72,7 @@ class ReviewController extends CoreController
 
     public function ajaxValidation($form)
     {
-        if($this->r->isPost && isset($_POST['ajax_validation'])) {
+        if ($this->r->isPost && isset($_POST['ajax_validation'])) {
             $form->populate($_POST)->isValid();
             echo Json::encode($form->getErrors());
             Mindy::app()->end();
