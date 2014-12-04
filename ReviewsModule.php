@@ -2,6 +2,7 @@
 
 namespace Modules\Reviews;
 
+use Mindy\Base\Mindy;
 use Mindy\Base\Module;
 
 class ReviewsModule extends Module
@@ -14,6 +15,20 @@ class ReviewsModule extends Module
     public function getVersion()
     {
         return '1.0';
+    }
+
+    public static function preConfigure()
+    {
+        $tpl = Mindy::app()->template;
+        $tpl->addHelper('get_reviews', function($limit = 10) {
+            $cls = Mindy::app()->getModule('Reviews')->modelClass;
+            return $cls::objects()
+                ->filter(['is_published' => true])
+                ->offset(0)
+                ->limit($limit)
+                ->order(['-published_at'])
+                ->all();
+        });
     }
 
     public function getMenu()
