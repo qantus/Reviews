@@ -20,13 +20,13 @@ class ReviewsModule extends Module
     public static function preConfigure()
     {
         $tpl = Mindy::app()->template;
-        $tpl->addHelper('get_reviews', function($limit = 10) {
+        $tpl->addHelper('get_reviews', function($limit = 10, $order = '-published_at') {
             $cls = Mindy::app()->getModule('Reviews')->modelClass;
             return $cls::objects()
                 ->filter(['is_published' => true])
                 ->offset(0)
                 ->limit($limit)
-                ->order(['-published_at'])
+                ->order([$order])
                 ->all();
         });
     }
