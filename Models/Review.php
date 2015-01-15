@@ -94,7 +94,7 @@ class Review extends Model
 
     public function getAbsoluteUrl()
     {
-        return Mindy::app()->urlManager->reverse('reviews.view', ['pk' => $this->id]);
+        return Mindy::app()->urlManager->reverse('reviews:view', ['pk' => $this->id]);
     }
 
     /**
