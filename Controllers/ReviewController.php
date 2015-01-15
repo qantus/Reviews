@@ -45,7 +45,7 @@ class ReviewController extends CoreController
 
         $modelClass = $module->modelClass;
         $model = new $modelClass;
-        $pager = new Pagination($model->objects()->published());
+        $pager = new Pagination($model->objects()->published()->order(['-published_at']));
         echo $this->render('reviews/index.html', [
             'pager' => $pager,
             'reviews' => $pager->paginate(),
