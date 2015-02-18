@@ -57,12 +57,12 @@ class ReviewController extends CoreController
     public function actionView($pk)
     {
         $modelClass = $this->getModule()->modelClass;
-        $model = $modelClass::objects()->filter(['pk' => $pk])->get();
+        $model = $modelClass::objects()->filter(['pk' => $pk, 'is_published' => true])->get();
         if (!$model) {
             $this->error(404);
         }
 
-        $this->addBreadcrumb(ReviewsModule::t('Reviews'), Mindy::app()->urlManager->reverse('reviews.send'));
+        $this->addBreadcrumb(ReviewsModule::t('Reviews'), Mindy::app()->urlManager->reverse('reviews:index'));
         $this->addBreadcrumb($model->name);
 
         echo $this->render('reviews/view.html', [
